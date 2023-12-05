@@ -2,7 +2,7 @@ import os
 from pymongo import MongoClient
 from logger.logger import log
 
-class BookModel:
+class NotifModel:
     def __init__(self):
         self.client = None
         self.db = None

@@ -1,2 +1,9 @@
+# local venv
 /venv
-logger/API_Notifications
+
+env_data.txt
+
+#Logs
+API_Notifications
+
+__pycache__
