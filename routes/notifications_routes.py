@@ -11,25 +11,27 @@ class NotifRoutes(Blueprint):
 
     def register_routes(self):
         """ READ """
-        self.route('/api/notif', methods=['GET'])(self.get_notif)
-        self.route('/api/notif/<int:notif_id>', methods=['GET'])(self.get_notif_by_id)
-        """ CREATE """
-        self.route('/api/notif', methods=['POST'])(self.add_notif)
-        """ UPDATE """
-        self.route('/api/notif/<int:notif_id>', methods=['PUT'])(self.update_notif)
-        """ DELETE """
-        self.route('/api/notif/<int:notif_id>', methods=['DELETE'])(self.delete_notif)
+        self.route('/apinotif/notif', methods=['GET'])(self.get_task_list)
 
-    def get_notif(self):
+        """ ids: task-list, task, notification """
+        self.route('/apinotif/notif/<int:list_id>/<int:task_id>/<int:notif_id>', methods=['GET'])(self.get_notif_by_id)
+        
+        """ self.route('/apinotif/notif', methods=['POST'])(self.add_notif)
+        
+        self.route('/apinotif/notif/<int:notif_id>', methods=['PUT'])(self.update_notif)
+
+        self.route('/apinotif/notif/<int:notif_id>', methods=['DELETE'])(self.delete_notif) """
+
+    def get_task_list(self):
         try:
-            self.notif = self.notif_service.get_all_notif()
+            self.notif = self.notif_service.get_all_due_tasks()
             return jsonify(self.notif), 200
         except Exception as e:
             log.exception(f'Error fetching data from the database: {e}')
             return jsonify({'error': 'Failed to fetch data from the database'}), 500
     
-    def get_notif_by_id(self, notif_id):
-        self.notif = self.notif_service.get_notif_by_id(notif_id)
+    def get_notif_by_id(self, list_id, task_id, notif_id):
+        self.notif = self.notif_service.get_notif_by_id(list_id, task_id, notif_id)
         if self.notif:
             return jsonify(self.notif), 200
         else: 
