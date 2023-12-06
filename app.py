@@ -28,10 +28,14 @@ notif_schema = NotifSchema()
 notif_blueprint = NotifRoutes(notif_service, notif_schema)
 app.register_blueprint(notif_blueprint)
 
-CORS(app, resources={r'/api/notifications': {'origins': 'http://localhost:3000'}})
+CORS(app, resources={r'/apinotif/notif': {'origins': 'http://localhost:3000'}})
 
 if __name__ == '__main__':
     try:
         app.run(debug=True)
     finally:
         db_connector.close_connection()
+
+# Change port where api runs
+# Command
+# flask run --port=5001
