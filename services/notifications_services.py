@@ -9,7 +9,7 @@ class NotifService:
 
     def get_all_tasks(self):
         try:           
-            self.tasks = list(self.db_connector.db.tasks.find())
+            self.tasks = list(self.db_connector.db.task_lists.find())
             self.due_tasks = list()
             for list_t in self.tasks:
                 for task in list_t['tasks']:
@@ -30,7 +30,7 @@ class NotifService:
     
     def get_task_by_id(self, list_id, task_id):
         try:
-            self.notif = self.db_connector.db.tasks.find_one({
+            self.notif = self.db_connector.db.task_lists.find_one({
                 '_id': list_id,
                 'tasks._id': task_id
                 })
@@ -53,7 +53,7 @@ class NotifService:
         try:
             updated_notif = self.get_task_by_id(list_id, task_id)
             if updated_notif:
-                result = self.db_connector.db.tasks.update_one({
+                result = self.db_connector.db.task_lists.update_one({
                 '_id': list_id,
                 'tasks._id': task_id,
                 },
@@ -72,7 +72,7 @@ class NotifService:
         try:
             deleted_task = self.get_task_by_id(list_id, task_id)
             if deleted_task:
-                self.db_connector.db.tasks.update_one({
+                self.db_connector.db.task_lists.update_one({
                 '_id': list_id,
                 'tasks._id': task_id},
                 {'$unset': {'tasks.$._id': 1, 'tasks.$.name': 1,
