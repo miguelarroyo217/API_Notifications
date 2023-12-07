@@ -19,9 +19,9 @@
     },
     {
       "_id": 2,
-      "name": "Task 2 of List 1",
+      "name": "Final class SD",
       "description": "Description Task 2",
-      "due": "2024-04-20 15:45:00",
+      "due": "2023-12-14 09:00:00",
       "status": "Pending",
       "notifications": [
         {
@@ -32,9 +32,9 @@
     },
     {
       "_id": 3,
-      "name": "Task 3 of List 1",
-      "description": "Description Task 3",
-      "due": "2024-05-25 12:00:00",
+      "name": "Chrismash",
+      "description": "Chrismash",
+      "due": "2023-12-25 12:00:00",
       "status": "Pending",
       "notifications": [
         {
@@ -147,9 +147,9 @@
   "tasks": [
     {
       "_id": 1,
-      "name": "Task 1 of List 4",
-      "description": "Description Task 1",
-      "due": "2024-12-01 11:45:00",
+      "name": "New Year",
+      "description": "New Year",
+      "due": "2023-12-31 11:45:00",
       "status": "Pending",
       "notifications": [
         {
@@ -170,8 +170,8 @@
           "due_notif": "2024-12-01 11:45:00"
         },
         {
-            "_id": 2,
-            "due_notif": "2024-12-01 10:45:00"
+          "_id": 2,
+          "due_notif": "2024-12-01 10:45:00"
         }
       ]
     },
@@ -179,7 +179,7 @@
       "_id": 3,
       "name": "Task 3 of List 4",
       "description": "Description Task 3",
-      "due": "2024-02-10 13:15:00",
+      "due": "2023-12-10 13:15:00",
       "status": "Pending",
       "notifications": [
         {
