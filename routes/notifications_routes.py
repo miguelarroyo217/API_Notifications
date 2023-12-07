@@ -16,9 +16,9 @@ class NotifRoutes(Blueprint):
         """ ids: task-list, task, notification """
         self.route('/apinotif/notif/<int:list_id>/<int:task_id>/<int:notif_id>', methods=['GET'])(self.get_notif_by_id)
         
+        self.route('/apinotif/notif/<int:list_id>/<int:task_id>/<int:notif_id>', methods=['PUT'])(self.update_due_notif)
+
         """ self.route('/apinotif/notif', methods=['POST'])(self.add_notif)
-        
-        self.route('/apinotif/notif/<int:notif_id>', methods=['PUT'])(self.update_notif)
 
         self.route('/apinotif/notif/<int:notif_id>', methods=['DELETE'])(self.delete_notif) """
 
@@ -31,11 +31,33 @@ class NotifRoutes(Blueprint):
             return jsonify({'error': 'Failed to fetch data from the database'}), 500
     
     def get_notif_by_id(self, list_id, task_id, notif_id):
-        self.notif = self.notif_service.get_notif_by_id(list_id, task_id, notif_id)
-        if self.notif:
-            return jsonify(self.notif), 200
-        else: 
-            return jsonify({'error': 'Notification not found'}), 404
+        try:
+            self.notif = self.notif_service.get_notif_by_id(list_id, task_id, notif_id)
+            if self.notif:
+                return jsonify(self.notif), 200
+            else: 
+                return jsonify({'error': 'Notification not found'}), 404
+        except Exception as e:
+            log.exception(f'Error fetching notification by id from the database: {e}')
+            return jsonify({'error': 'Failed to fetch notification by id from the database'}), 500
+        
+    def update_due_notif(self, list_id, task_id, notif_id):
+        try:
+            self.data=request.json
+            log.info(self.data)
+            if not self.data:
+                    return jsonify({'error': 'Invalid data'}), 400
+
+            self.due_notif = self.data.get('due_notif')
+
+            self.notif = self.notif_service.update_due_notif(list_id, task_id, notif_id, self.due_notif)
+            if self.notif:
+                return jsonify(self.notif), 200
+            else: 
+                return jsonify({'error': 'Notification not found'}), 404
+        except Exception as e:
+            log.exception(f'Error updating due notification: {e}')
+            return jsonify({'error': 'Error updating due notification'}), 500
         
     """ def add_notif(self):
         try:

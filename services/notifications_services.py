@@ -49,3 +49,23 @@ class NotifService:
             log.critical(f'Error fetching the notification id from the database: {e}')
             return jsonify({'error': f'Error fetching the notification id from the database: {e}'}), 500
 
+    def update_due_notif(self, list_id, task_id, notif_id, updated_due):
+        try:
+            updated_notif = self.get_notif_by_id(list_id, task_id, notif_id)
+            if updated_notif:
+                result = self.db_connector.db.tasks.update_one({
+                '_id': list_id,
+                'tasks._id': task_id,
+                'tasks.notifications._id': notif_id
+                },
+                {'$set': {'tasks.notifications.$.due_notif': updated_due}})
+                if result.modified_count > 0:
+                    return updated_notif
+                else:
+                    return {'message': 'The notifications is already up-to-date'}
+            else:
+                return None
+
+        except Exception as e:
+            log.critical(f'Error updating the notification due: {e}')
+            return jsonify({'error': f'Error updating the notification due: {e}'}), 500
